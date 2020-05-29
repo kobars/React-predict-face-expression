@@ -23,7 +23,7 @@ export default function Home() {
           <div className="col-md-6 mt-3">
             <Link href="/galery">
               <div className="card" style={{ width: "310px" }}>
-                <img src="https://cdn.icon-icons.com/icons2/1551/PNG/512/if-traveling-icon-flat-outline15-3405105_107384.png" className="card-img-top" alt="galery" width="256px" height="256px" />
+                <img src="https://cdn.icon-icons.com/icons2/1551/PNG/512/if-traveling-icon-flat-outline15-3405105_107384.png" className="card-img-top" alt="gallery" width="256px" height="256px" />
                 <a className="btn btn-info text-white">From files / gallery</a>
               </div>
             </Link>
