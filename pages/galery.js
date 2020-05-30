@@ -56,12 +56,12 @@ export default function Galery() {
                 <div className="mt-5">
                     <button className="btn btn-dark" disabled={!imgInput || isLoading}>Upload</button>
                 </div>
-                <div className="mt-5">
+                <div className="mt-4">
+                    {imageRes && imageRes.image_public_url ? <a className="btn btn-dark" href={fileURL} target="_blank">Open picture</a> : null}
                     {imageRes && imageRes.image_public_url ? <img src={imageRes.image_public_url} alt="img" style={{ height: 'auto', width: '400px' }} /> : null}
                     <br />
                     <br />
                     {imageRes ? <h1>Expression: {imageRes.expression}</h1> : null}
-                    {imageRes && imageRes.image_public_url ? <a className="btn btn-dark" href={fileURL} target="_blank">Open picture</a> : null}
                 </div>
                 <div className="footer">
                     <Link href="/">
