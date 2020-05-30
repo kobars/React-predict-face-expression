@@ -2,6 +2,7 @@ import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import axios from 'axios'
+import { generateUID } from '../utils/index'
 const Camera = dynamic(
     () => import('react-html5-camera-photo'),
     { ssr: false }
@@ -26,15 +27,15 @@ export default function Selfie() {
         setImgRes('')
         setLoading(true)
         const uploadTime = Date.now();
+        const uid = generateUID('S', uploadTime)
         const file = DataURIToBlob(dataUri)
         const data = new FormData()
-        data.append("file", file, `${uploadTime}.png`);
+        data.append("file", file, uid);
         const url = 'https://bangkit-face-exp.df.r.appspot.com/upload_photo'
 
         try {
             const res = await axios.post(url, data)
             const imgsData = res.data
-            console.log(imgsData)
             setImgRes(imgsData)
             setLoading(false)
         } catch (error) {
@@ -48,11 +49,6 @@ export default function Selfie() {
                 onTakePhoto={(dataUri) => { handleTakePhoto(dataUri); }}
                 idealFacingMode={'user'}
             />
-            <div className="footer">
-                <Link href="/">
-                    <h5 className="btn btn-dark" style={{ marginTop: '300px' }}>Back to home</h5>
-                </Link>
-            </div>
             {isLoading ?
                 <div>
                     <div className="lds-ripple"><div></div><div></div></div>
@@ -61,8 +57,12 @@ export default function Selfie() {
             <div className="mt-5">
                 {imageRes && imageRes.image_public_url ? <img src={imageRes.image_public_url} alt="img" style={{ height: 'auto', width: '200px' }} /> : null}
                 <br />
-                <br />
                 {imageRes ? <h1>Expression: {imageRes.expression}</h1> : null}
+            </div>
+            <div className="footer">
+                <Link href="/">
+                    <h5 className="btn btn-dark" style={{ marginTop: '300px' }}>Back to home</h5>
+                </Link>
             </div>
             <style jsx>{`
             .footer {

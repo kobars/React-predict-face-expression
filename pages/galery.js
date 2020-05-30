@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios'
 import Link from 'next/link'
+import { generateUID } from '../utils/index'
 
 export default function Galery() {
     const [file, setFile] = useState("");
     const [isLoading, setLoading] = useState(false)
     const [fileName, setFilename] = useState("Choose File");
+    const [fileURL, setFileURL] = useState('')
     const [imgInput, setImgInput] = useState('')
     const [imageRes, setImgRes] = useState('')
 
@@ -18,15 +20,17 @@ export default function Galery() {
 
     const handleUploadImage = async (ev) => {
         setLoading(true)
+        const uploadTime = Date.now();
+        const uid = generateUID('G', uploadTime)
         ev.preventDefault();
         const data = new FormData();
-        data.append('file', file);
-        data.append('filename', fileName);
+        data.append('file', file, uid);
         const url = 'https://bangkit-face-exp.df.r.appspot.com/upload_photo'
 
         try {
             const res = await axios.post(url, data)
             const imgsData = res.data
+            setFileURL(res.data.image_public_url)
             setImgRes(imgsData)
             setLoading(false)
         } catch (error) {
@@ -50,13 +54,14 @@ export default function Galery() {
                         <p>Loading...</p>
                     </div> : null}
                 <div className="mt-5">
-                    <button className="btn btn-dark" disabled={!imgInput}>Upload</button>
+                    <button className="btn btn-dark" disabled={!imgInput || isLoading}>Upload</button>
                 </div>
                 <div className="mt-5">
                     {imageRes && imageRes.image_public_url ? <img src={imageRes.image_public_url} alt="img" style={{ height: 'auto', width: '400px' }} /> : null}
                     <br />
                     <br />
                     {imageRes ? <h1>Expression: {imageRes.expression}</h1> : null}
+                    {imageRes && imageRes.image_public_url ? <a className="btn btn-dark" href={fileURL} target="_blank">Open picture</a> : null}
                 </div>
                 <div className="footer">
                     <Link href="/">
