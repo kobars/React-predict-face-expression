@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import axios from 'axios'
 import { generateUID } from '../utils/index'
 import BottomBar from './components/BottomBar'
