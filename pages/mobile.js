@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import ExpChart from './components/ExpChart'
+import dynamic from 'next/dynamic'
+const ExpChart = dynamic(
+    () => import('./components/ExpChart'),
+    { ssr: false }
+)
+// import ExpChart from './components/ExpChart'
 import useSWR, { SWRConfig } from 'swr'
 import { groupBy, generateReport, fetcher, COLORS } from '../utils/index'
 import Slider from "react-slick";
