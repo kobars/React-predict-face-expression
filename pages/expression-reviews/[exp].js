@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import useSWR from 'swr'
+import dynamic from 'next/dynamic'
 import Slider from "react-slick";
-import BottomBar from '../components/BottomBar'
+const BottomBar = dynamic(() => import('../components/BottomBar'))
 
 export const SnackBar = ({ exp, validation }) => (
     <div>
