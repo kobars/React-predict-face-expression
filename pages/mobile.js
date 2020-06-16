@@ -1,15 +1,11 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-const ExpChart = dynamic(
-    () => import('./components/ExpChart'),
-    { ssr: false }
-)
-// import ExpChart from './components/ExpChart'
 import useSWR, { SWRConfig } from 'swr'
 import { groupBy, generateReport, fetcher, COLORS } from '../utils/index'
-import Slider from "react-slick";
-import BottomBar from './components/BottomBar'
 import Link from 'next/link'
+import Slider from "react-slick";
+const ExpChart = dynamic(() => import('./components/ExpChart'))
+const BottomBar = dynamic(() => import('./components/BottomBar'))
 
 const Mobile = () => (
     <SWRConfig value={{ revalidateOnFocus: false, fetcher }}>
@@ -30,7 +26,6 @@ const Fetching = () => {
     const allData = data['all images and expressions']
     const groupedData = groupBy(allData, 'expression')
     const report = generateReport(groupedData)
-    console.log('report', report)
     return (
         <DisplayMobile fetchData={report} />
     )
@@ -59,7 +54,6 @@ const DisplayMobile = ({ fetchData }) => {
     };
 
     const validationData = fetchData[active].validation
-
     return (
         <div style={{ height: '100vh', maxWidth: '500px', margin: '0 auto' }}>
             <h1 className="app-title text-center pt-4">Bangkit Expression</h1>
