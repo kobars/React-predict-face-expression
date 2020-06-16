@@ -120,7 +120,7 @@ const Expressions = ({ expParamQuery, defaultExpData }) => {
         },
     };
     const changeExp = async (activeExp) => {
-        const res = await fetch(`http://bangkit-face-exp.df.r.appspot.com/update-validation/${expData[active].blob_name}/${activeExp}`, {
+        const res = await fetch(`https://bangkit-face-exp.df.r.appspot.com/update-validation/${expData[active].blob_name}/${activeExp}`, {
             method: 'POST'
         })
         const resp = await res.json()
