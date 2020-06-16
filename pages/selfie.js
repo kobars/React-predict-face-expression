@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import axios from 'axios'
 import { generateUID } from '../utils/index'
+import BottomBar from './components/BottomBar'
 const Camera = dynamic(
     () => import('react-html5-camera-photo'),
     { ssr: false }
@@ -11,6 +12,10 @@ const Camera = dynamic(
 export default function Selfie() {
     const [isLoading, setLoading] = useState(false)
     const [imageRes, setImgRes] = useState('')
+    const [loadingHome, setLoadingHome] = useState(false)
+    const [loadingGallery, setLoadingGallery] = useState(false)
+    const [loadingSelfie, setLoadingSeflie] = useState(false)
+
     const DataURIToBlob = (dataURI) => {
         const splitDataURI = dataURI.split(',')
         const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
@@ -59,20 +64,8 @@ export default function Selfie() {
                 <br />
                 {imageRes ? <h1>Expression: {imageRes.expression}</h1> : null}
             </div>
-            <div className="footer">
-                <Link href="/">
-                    <h5 className="btn btn-dark" style={{ marginTop: '300px' }}>Back to home</h5>
-                </Link>
-            </div>
+            < BottomBar expressionLabel='happy' active='selfie' loadingHome={loadingHome} loadingGallery={loadingGallery} setLoadingHome={() => setLoadingHome(true)} setLoadingGallery={() => setLoadingGallery(true)} loadingSelfie={loadingSelfie} setLoadingSelfie={() => setLoadingSeflie(true)} />
             <style jsx>{`
-            .footer {
-                text-align: left;
-                margin-left: 20px;
-                position: fixed;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-            }
             .lds-ripple {
                 display: inline-block;
                 position: relative;
