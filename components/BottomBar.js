@@ -5,7 +5,7 @@ const BottomBar = ({ active, loadingHome, loadingGallery, loadingSelfie, setLoad
     return (
         <div className="bottom-appbar">
             <div className="tabs">
-                <Link href="/mobile">
+                <Link href="/">
                     <div className={`tab${active === 'home' ? ' is-active' : ''} tab--left`} onClick={active === 'home' || allLoading ? null : setLoadingHome}>
                         {loadingHome ? <i className="fa fa-spinner fa-spin" aria-hidden></i> : <i className="fas fa-home" aria-hidden></i>}
                         {!loadingHome ? <span>Home</span> : null}
