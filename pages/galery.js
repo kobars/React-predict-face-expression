@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios'
 import Link from 'next/link'
 import { generateUID } from '../utils/index'
+import dynamic from 'next/dynamic'
+const BottomBar = dynamic(() => import('../components/BottomBar'))
 
 export default function Galery() {
     const [file, setFile] = useState("");
@@ -10,12 +12,14 @@ export default function Galery() {
     const [fileURL, setFileURL] = useState('')
     const [imgInput, setImgInput] = useState('')
     const [imageRes, setImgRes] = useState('')
+    const [preview, setPreview] = useState(null)
 
     const onFileChange = (e) => {
         setImgRes('')
         setImgInput(e.target.value)
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
+        setPreview(URL.createObjectURL(e.target.files[0]))
     }
 
     const handleUploadImage = async (ev) => {
@@ -37,40 +41,80 @@ export default function Galery() {
             console.log(error)
         }
     }
-
+    useEffect(() => {
+        window.document.getElementById('customFile');
+    }, [])
     return (
-        <div className="container px-0 text-center">
-            <form onSubmit={handleUploadImage}>
-                <div className="custom-file">
-                    <input type="file" className="custom-file-input" id="customFile" onChange={onFileChange} />
-                    <label className="custom-file-label" htmlFor="customFile" >
-                        {fileName}
-                    </label>
-                </div>
-                <br />
-                {isLoading ?
-                    <div>
-                        <div className="lds-ripple"><div></div><div></div></div>
-                        <p>Loading...</p>
-                    </div> : null}
-                <div className="mt-5">
-                    <button className="btn btn-dark" disabled={!imgInput || isLoading}>Upload</button>
-                </div>
-                <div className="mt-4">
-                    {imageRes && imageRes.image_public_url ? <a className="btn btn-dark" href={fileURL} target="_blank">Open picture</a> : null}
-                    {imageRes && imageRes.image_public_url ? <img src={imageRes.image_public_url} alt="img" style={{ height: 'auto', width: '400px' }} /> : null}
-                    <br />
-                    <br />
-                    {imageRes ? <h1>Expression: {imageRes.expression}</h1> : null}
-                </div>
-                <div className="footer">
-                    <Link href="/">
-                        <h5 className="btn btn-dark" style={{ marginTop: '300px' }}>Back to home</h5>
-                    </Link>
-                </div>
+        <div className="container pt-3 text-center" style={{ height: '100vh', maxWidth: '500px', margin: '0 auto' }}>
+            <div className="modal-backdrop fade show"></div>
+            <button style={{ opacity: '0' }} type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Launch demo modal
+            </button>
 
-            </form>
+            <div className="modal in" data-backdrop="static" data-show="true" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ display: 'block' }}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Take picture</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <Link href="/">
+                                    <span aria-hidden="true">&times;</span>
+                                </Link>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="container img-container">
+                                <img className="img-fluid" src={preview} />
+                            </div>
+                            <h5 className="pt-4" style={{ textTransform: 'capitalize' }}>{imageRes.expression}</h5>
+                            <form onSubmit={handleUploadImage}>
+                                <div className="modal-footer">
+                                    <br />
+                                    <div className="btn btn-dark custom-file mr-5" style={{ width: '120px', height: '50px', borderRadius: '8px' }}>
+                                        <input type="file" accept="image/*" capture="user" id="customFile" onChange={onFileChange} />
+                                        <i aria-hidden className="fa fa-camera" style={{ fontSize: '20px', paddingTop: '8px' }}></i>
+                                    </div>
+                                    <button disabled={!file ? true : false} className="btn btn-dark" style={{ width: '120px', height: '50px', borderRadius: '8px' }}>{isLoading ?
+                                        <div>
+                                            <i className="fa fa-spinner fa-spin"></i>
+                                        </div> : 'Upload'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <BottomBar />
+
             <style jsx>{`
+            #customFile {
+                position: absolute;
+                left: -3px;
+                width: 140px;
+                opacity: 0;
+                z-index-2;
+            }
+            .container .img-container {
+                    border-radius: 3px;
+                    padding-top: 0px;
+                    height: 250px;
+                    max-width: 370px;
+                    position: relative;
+                    background: #1e272e;
+                }
+                .img-fluid {
+                    margin: 0;
+                    padding: 6px 7px;
+                    border-radius: 3px;
+                    position: absolute;
+                    height:250px;
+                    top: 50%;
+                    left: 50%;
+                    opacity: 0.95;
+                    -ms-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+                }
             .footer {
                 text-align: left;
                 margin-left: 20px;
@@ -79,38 +123,7 @@ export default function Galery() {
                 bottom: 0;
                 width: 100%;
             }
-            .lds-ripple {
-                display: inline-block;
-                position: relative;
-                width: 80px;
-                height: 80px;
-            }
-            .lds-ripple div {
-                position: absolute;
-                border: 4px solid #cef;
-                opacity: 1;
-                border-radius: 50%;
-                animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-            }
-            .lds-ripple div:nth-child(2) {
-                animation-delay: -0.5s;
-            }
-            @keyframes lds-ripple {
-                0% {
-                    top: 36px;
-                    left: 36px;
-                    width: 0;
-                    height: 0;
-                    opacity: 1;
-                }
-                100% {
-                    top: 0px;
-                    left: 0px;
-                    width: 72px;
-                    height: 72px;
-                    opacity: 0;
-                }
-            }`}</style>
+            `}</style>
         </div>
     );
 }

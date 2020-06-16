@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import Slider from "react-slick";
-const BottomBar = dynamic(() => import('../components/BottomBar'))
+const Slider = dynamic(() => import('react-slick'))
+const BottomBar = dynamic(() => import('../../components/BottomBar'))
 
 export const SnackBar = ({ exp, validation }) => (
     <div>
@@ -130,7 +130,7 @@ const Expressions = ({ expParamQuery, defaultExpData }) => {
     }
 
     return (
-        <div>
+        <div style={{ height: '100vh', maxWidth: '500px', margin: '0 auto' }}>
             <div className="container">
                 <div className="container img-container">
                     <img className="img-fluid" alt={expData[0].image_public_url} src={expData[active].image_public_url} />
@@ -188,7 +188,9 @@ const Expressions = ({ expParamQuery, defaultExpData }) => {
                     height: 96px;
                     border-radius: 5px;
                 }
- 
+                .middle-container img {
+                    filter: grayscale(1);
+                }
                 div.row {
                     padding: 5px;
                     border: 1px solid red;

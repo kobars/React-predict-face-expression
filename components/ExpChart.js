@@ -1,4 +1,4 @@
-import { COLORS } from '../../utils/index'
+import { COLORS } from '../utils/index'
 import {
     ResponsiveContainer, PieChart, Pie, Cell,
 } from 'recharts';
@@ -18,13 +18,9 @@ const renderCustomizedLabel = ({
         </text>
     );
 };
-const dummyData = [
-    { name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 },
-];
 
 const ExpChart = ({ data }) => {
-    const usedData = data || dummyData
+    const usedData = data
     return (
         <div style={{ width: '100%', height: 290, marginBottom: '-30px', marginTop: '-20px' }}>
             <ResponsiveContainer>

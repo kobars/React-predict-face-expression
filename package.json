@@ -12,7 +12,6 @@
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-html5-camera-photo": "^1.5.4",
     "react-slick": "^0.26.1",
     "recharts": "^1.8.5",
     "slick-carousel": "^1.8.1",

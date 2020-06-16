@@ -11,7 +11,7 @@ const BottomBar = ({ active, loadingHome, loadingGallery, loadingSelfie, setLoad
                         {!loadingHome ? <span>Home</span> : null}
                     </div>
                 </Link>
-                <Link href="/selfie">
+                <Link href="/galery">
                     <div className="tab tab--fab" aria-hidden onClick={active === 'selfie' || allLoading ? null : setLoadingSelfie}>
                         <div className="top">
                             <div className="fab" aria-hidden style={{ backgroundColor: active === 'selfie' ? '#2c3e50' : '' }}>
