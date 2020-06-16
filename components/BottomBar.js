@@ -7,7 +7,7 @@ const BottomBar = ({ active, loadingHome, loadingGallery, loadingSelfie, setLoad
             <div className="tabs">
                 <Link href="/mobile">
                     <div className={`tab${active === 'home' ? ' is-active' : ''} tab--left`} onClick={active === 'home' || allLoading ? null : setLoadingHome}>
-                        {loadingHome ? <i className="fa fa-spinner fa-spin"></i> : <i className="fas fa-home"></i>}
+                        {loadingHome ? <i className="fa fa-spinner fa-spin" aria-hidden></i> : <i className="fas fa-home" aria-hidden></i>}
                         {!loadingHome ? <span>Home</span> : null}
                     </div>
                 </Link>
@@ -15,14 +15,14 @@ const BottomBar = ({ active, loadingHome, loadingGallery, loadingSelfie, setLoad
                     <div className="tab tab--fab" aria-hidden onClick={active === 'selfie' || allLoading ? null : setLoadingSelfie}>
                         <div className="top">
                             <div className="fab" aria-hidden style={{ backgroundColor: active === 'selfie' ? '#2c3e50' : '' }}>
-                                {loadingSelfie ? <i className="fa fa-spinner fa-spin"></i> : <i className="fas fa-record-vinyl" ></i>}
+                                {loadingSelfie ? <i className="fa fa-spinner fa-spin" aria-hidden></i> : <i className="fas fa-record-vinyl" aria-hidden></i>}
                             </div>
                         </div>
                     </div>
                 </Link>
                 <Link href={`/expression-reviews/${expressionLabel}`}>
                     <div className={`tab${active === 'gallery' ? ' is-active' : ''} tab--right`} onClick={active === 'gallery' || allLoading ? null : setLoadingGallery}>
-                        {loadingGallery ? <i className="fa fa-spinner fa-spin"></i> : <i className="fas fa-photo-video"></i>}
+                        {loadingGallery ? <i className="fa fa-spinner fa-spin" aria-hidden></i> : <i className="fas fa-photo-video" aria-hidden></i>}
                         {!loadingGallery ? <span>Gallery</span> : null}
                     </div>
                 </Link>

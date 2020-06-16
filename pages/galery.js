@@ -85,7 +85,7 @@ export default function Galery() {
                     </div>
                 </div>
             </div>
-            <BottomBar />
+            <BottomBar active='selfie' />
 
             <style jsx>{`
             #customFile {
