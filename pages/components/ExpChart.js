@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react';
 import { COLORS } from '../../utils/index'
 import {
-    ResponsiveContainer, PieChart, Pie, Cell, Legend,
+    ResponsiveContainer, PieChart, Pie, Cell,
 } from 'recharts';
 
 const RADIAN = Math.PI / 180;
@@ -12,9 +11,6 @@ const renderCustomizedLabel = ({
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
-    console.log('radius', radius)
-    console.log('x', x)
-    console.log('y', y)
 
     return (
         <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
@@ -22,14 +18,19 @@ const renderCustomizedLabel = ({
         </text>
     );
 };
+const dummyData = [
+    { name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 },
+];
 
 const ExpChart = ({ data }) => {
+    const usedData = data || dummyData
     return (
         <div style={{ width: '100%', height: 290, marginBottom: '-30px', marginTop: '-20px' }}>
             <ResponsiveContainer>
                 <PieChart>
-                    <Pie dataKey="value" data={data} fill="#8884d8" label={renderCustomizedLabel} labelLine={false} animationDuration={300} >
-                        {data.map((entry, index) => <Cell key={`cell-${index}`} fill={index === 0 ? COLORS[index] : COLORS[index]} />)}
+                    <Pie dataKey="value" data={usedData} fill="#8884d8" label={renderCustomizedLabel} labelLine={false} animationDuration={300} >
+                        {usedData.map((entry, index) => <Cell key={`cell-${index}`} fill={index === 0 ? COLORS[index] : COLORS[index]} />)}
                     </Pie>
                 </PieChart>
             </ResponsiveContainer>
