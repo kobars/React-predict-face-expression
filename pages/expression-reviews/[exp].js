@@ -230,12 +230,12 @@ export async function getServerSideProps(context) {
     const expParamQuery = context.query.exp
     const resp = await fetch(`https://bangkit-face-exp.df.r.appspot.com/get-expression/${expParamQuery}`)
     const res = await resp.json()
-    const data = res['expressions']
-
+    const resData = res['expressions']
+    const data = resData.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     return {
         props: {
             expParamQuery,
-            defaultExpData: data
+            defaultExpData: data.reverse()
         }
     }
 }
