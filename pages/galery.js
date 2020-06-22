@@ -51,7 +51,7 @@ export default function Galery() {
                 Launch demo modal
             </button>
 
-            <div className="modal in" data-backdrop="static" data-show="true" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ display: 'block' }}>
+            <div className="modal in" data-backdrop="static" data-show="true" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ display: 'block' }}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
