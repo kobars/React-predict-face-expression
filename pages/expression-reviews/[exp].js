@@ -130,10 +130,10 @@ const Expressions = ({ expParamQuery, defaultExpData }) => {
     }
 
     return (
-        <div style={{ height: '100vh', maxWidth: '500px', margin: '0 auto' }}>
+        <div style={{ paddingBottom: '120px', maxWidth: '500px', margin: '0 auto' }}>
             <div className="container">
                 <div className="container img-container">
-                    <img className="img-fluid" alt={expData[0].image_public_url} src={expData[active].image_public_url} />
+                    <img className="img-fluid" alt={expData[active].image_public_url} src={`https://firebasestorage.googleapis.com/v0/b/${process.env.NEXT_PUBLIC_storageBucket}/o/images%2F${expData[active].blob_name}?alt=media`} />
                 </div>
                 <div className="d-flex justify-content-center mt-5 mb-5">
                     <div className="wrapper mr-5" data-toggle="modal" data-target="#exampleModal">
