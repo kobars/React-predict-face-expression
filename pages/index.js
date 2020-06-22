@@ -56,7 +56,7 @@ const DisplayMobile = ({ fetchData }) => {
 
   const validationData = fetchData[active].validation
   return (
-    <div style={{ height: '100vh', maxWidth: '500px', margin: '0 auto' }}>
+    <div style={{ paddingBottom: '120px', maxWidth: '500px', margin: '0 auto' }}>
       <h1 className="app-title text-center pt-4">Bangkit Expression</h1>
       <div className="container">
         <div className="row">
